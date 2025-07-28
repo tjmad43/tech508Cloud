@@ -1,5 +1,24 @@
 # SSH
 
+The SSH protocol (Secure Shell) is a method for secure remote login from one computer to another. It provides several alternative options for strong authentication, and it protects communications security and integrity with strong encryption. It is a secure alternative to the non-protected login protocols (such as telnet, rlogin) and insecure file transfer methods (such as FTP).
+
+### What is an SSH key?
+- a key pair - private and public
+
+### Why do we use them?
+- more secure method of pushing and pulling - 4096 bits is significantly longer than a normal password and almost impossible to crack
+- plus encryption
+
+## Typical uses of the SSH protocol
+The protocol is used in corporate networks for:
+
+providing secure access for users and automated processes
+interactive and automated file transfers
+issuing remote commands
+managing network infrastructure and other mission-critical system components.
+
+
+## Steps for SSH on git
 1. Create SSH key
    - SSH key pair (type: RSA)
      - asymmetric - private key and public key.
