@@ -20,6 +20,7 @@
 Follow instructions for SSH client as given:
 ![SSHinstructions](AWS-SSH.png)
 - navigate to .ssh folder first
+  - or from anywhere, add path before ssh key filename. e.g. `"~/.ssh/tech508-tabitha-aws.pem"`
 - `chmod 400 "tech508-tabitha-aws.pem"` to make sure key is not publicly viewable
 - `ssh -i "tech508-tabitha-aws.pem" ubuntu@ec2-52-208-81-5.eu-west-1.compute.amazonaws.com` to connect to vm through SSH
 

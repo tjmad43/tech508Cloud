@@ -1,7 +1,7 @@
 # Intro to Cloud
 
 ## What is cloud computing?
-- on-demand delivery of computing of power, storage, and other services 
+- on-demand delivery of computing power, storage, and other services 
 - that is centrally managed and delivered as a service
 
 ## How do we know if something is in the cloud? 
