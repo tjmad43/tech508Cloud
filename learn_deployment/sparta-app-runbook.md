@@ -105,13 +105,18 @@ start and enable database
   - `DEBIAN_FRONTEND=noninteractive`
 - use `sed` to change the bindIP:
   - `sed -i 's/old_text/new_text/' filename`
-  - where -i is the in-place editing flag
-  - s/ means substitute
-- change `sudo gpg -o` to ...
+  - where `-i` is the in-place editing flag
+  - `s/` means substitute
+- importing the public key for the database asks the user if the file should be overwritten if already existent. Avoid prompt by writing to a temp file, then force-moving it:
+  - `curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
+  - `tee` overwrites the file without asking. Redirecting `> /dev/null` suppresses output
 
-- put into git repo & pull
-- `chmod +x <script>.sh` to add execute permissions
-- `./<script>` to run
+- to run scripts:
+  - put into git repo & pull, or create new script file and paste
+  - `chmod +x <script>.sh` to add execute permissions
+  - `./<script>` to run
 
 
 ## Run in background
