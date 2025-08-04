@@ -99,6 +99,15 @@ start and enable database
     - `node seeds/seed.js`
 
 
+## Make script run without input
+
+- 
+
+- put into git repo & pull
+- `chmod +x <script>.sh` to add execute permissions
+- `./<script>` to run
+
+
 ## Run in background
 
 - `nohup npm start &`

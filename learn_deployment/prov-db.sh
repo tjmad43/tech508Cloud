@@ -11,21 +11,29 @@ echo "Done"
 echo
 
 # import public key
+echo "Import public key..."
 sudo apt-get install gnupg curl
 
+
+# change -o to -tee
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
    --dearmor
+echo "Done"
+echo
 
 # create list file
+echo "Create list file..."
 echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+echo "Done"
+echo
 
 # reload package database
-sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get update
 
 # install mongo db
 # fix! needs input
-sudo apt-get install -y \
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
    mongodb-org=7.0.22 \
    mongodb-org-database=7.0.22 \
    mongodb-org-server=7.0.22 \
