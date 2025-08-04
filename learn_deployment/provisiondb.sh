@@ -1,12 +1,12 @@
 #!/bin/bash
 
 echo "Update..."
-sudp apt-get update
+sudp DEBIAN_FRONTEND=noninteractiv apt-get update
 echo "Done"
 echo
 
 echo "Upgrade..."
-sudo apt upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
 echo "Done"
 echo
 

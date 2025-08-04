@@ -2,12 +2,12 @@
 # provision for sparta app
 
 echo "Update..."
-sudo apt update
+sudo DEBIAN_FRONTEND=noninteractiv apt update
 echo "Done"
 echo
 
 # fix! expects user input
-sudo apt upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
 
 # fix! expects user input
 sudo apt-get install nginx -y

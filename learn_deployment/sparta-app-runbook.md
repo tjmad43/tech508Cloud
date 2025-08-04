@@ -90,14 +90,25 @@ start and enable database
 
 
 
-### connect
+## Connect app and database
 
- - set env var in app 
- - note: have screenshot
- - database instance private IP ->
- - export DB_HOST=mongodb://172.31.26.123:27017/posts
+- in app script/terminal, before npm start:
+  - set environment variable
+    - `export DB_HOST=mongodb://<database private IP>:27017/posts`
+  - manually seed db
+    - `node seeds/seed.js`
 
 
-to manually seed db
-node seeds/seed.js 
-before npm start
+## Run in background
+
+- `nohup npm start &`
+
+### To stop
+- find process ID (node)
+  - use `jobs` or `ps -e`
+  - engaging port 3000
+- use PID to kill
+- make sure it is able to be re-run
+
+OR
+
