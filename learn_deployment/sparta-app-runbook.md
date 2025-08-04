@@ -126,9 +126,19 @@ sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
 ### To stop
 - find process ID (node)
   - use `jobs` or `ps -e`
-  - engaging port 3000
+  - use `lsof -i :3000` to directly find what's using port 3000
 - use PID to kill
 - make sure it is able to be re-run
 
-OR
+### Or using pm2
+- install
+  - `npm install -g pm2`
+- start script
+  - `pm2 start <script>.sh --interpreter bash`
+  - add a name to make it easier to find: `pm2 start <script>.sh --name <name> --interpreter bash`
+- view running processes
+  - `pm2 list`
 
+
+
+ 

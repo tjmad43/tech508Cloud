@@ -16,11 +16,18 @@ sudo apt-get install gnupg curl
 
 
 # change -o to -tee
+#curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
+#   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+#   --dearmor
+#echo "Done"
+#echo
+echo "Import public key..."
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
-   --dearmor
+gpg --dearmor | \
+sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null
 echo "Done"
 echo
+
 
 # create list file
 echo "Create list file..."
@@ -29,10 +36,14 @@ echo "Done"
 echo
 
 # reload package database
+echo "Reload package database..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get update
+echo "Done"
+echo
 
 # install mongo db
 # fix! needs input
+echo "Install mongodb..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
    mongodb-org=7.0.22 \
    mongodb-org-database=7.0.22 \
@@ -42,14 +53,26 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
    mongodb-org-mongos=7.0.22 \
    mongodb-org-tools=7.0.22 \
    mongodb-org-database-tools-extra=7.0.22
+echo "Done"
+echo
 
 
 # change bindIp to allow anywhere
+echo "Change bindIp..."
 sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
+echo "Done"
+echo
 
+echo "Start db..."
 sudo systemctl start mongod
+echo "Done"
+echo
 
+echo "db status..."
 sudo systemctl status mongod
+echo
 
+echo "Enable mongodb..."
 sudo systemctl enable mongod
-
+echo "Done"
+echo
