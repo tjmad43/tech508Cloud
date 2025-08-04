@@ -101,7 +101,13 @@ start and enable database
 
 ## Make script run without input
 
-- 
+- add variable to make certain commands non-interactive
+  - `DEBIAN_FRONTEND=noninteractive`
+- use `sed` to change the bindIP:
+  - `sed -i 's/old_text/new_text/' filename`
+  - where -i is the in-place editing flag
+  - s/ means substitute
+- change `sudo gpg -o` to ...
 
 - put into git repo & pull
 - `chmod +x <script>.sh` to add execute permissions

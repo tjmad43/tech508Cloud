@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Update..."
-sudp DEBIAN_FRONTEND=noninteractiv apt-get update
+sudp DEBIAN_FRONTEND=noninteractive apt-get update
 echo "Done"
 echo
 
@@ -49,7 +49,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 #sudo cp mongod.conf mongod.conf.bk
 #sudo nano mongod.conf
 # use sed
-
+sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
 
 sudo systemctl start mongod
 

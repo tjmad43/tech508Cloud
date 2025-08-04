@@ -44,7 +44,7 @@ echo
 cd repo/app
 
 # database instance private IP
-export DB_HOST=mongodb://172.31.26.123:27017/posts
+export DB_HOST=mongodb://54.246.66.165:27017/posts
 
 # install packages for app
 echo "Install packages..."
