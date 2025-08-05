@@ -7,20 +7,23 @@ sudo DEBIAN_FRONTEND=noninteractive apt update
 echo "Done"
 echo
 
-# fix! expects user input
 echo "Upgrade..."
 sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y
 echo "Done"
 echo
 
-# fix! expects user input
 echo "Install nginx..."
-sudo apt-get install nginx -y
+sudo DEBIAN_FRONTEND=noninteractive apt-get install nginx -y
 echo "Done"
 echo
 
 # configure reverse proxy using nginx
-
+echo "Configure nginx..."
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bk
+sudo sed -i 's|try_files \$uri \$uri/ =404;|proxy_pass http://localhost:3000;|' /etc/nginx/sites-available/default
+sudo systemctl reload nginx
+echo "Done"
+echo
 
 # install node.js v20 (installs npm commands too)
 echo "Install node.js"
@@ -35,7 +38,7 @@ node -v
 echo
 
 # download app code to a "repo" folder
-echo "Download git repo"
+echo "Clone git repo"
 git clone https://github.com/tjmad43/tech508-sparta-app repo
 echo "Done"
 echo
@@ -44,7 +47,13 @@ echo
 cd repo/app
 
 # database instance private IP
-export DB_HOST=mongodb://54.246.66.165:27017/posts
+export DB_HOST=mongodb://172.31.30.252:27017/posts
+
+# seed database
+echo "Seed database..."
+node seeds/seed.js
+echo "Done"
+echo
 
 # install packages for app
 echo "Install packages..."
@@ -52,7 +61,14 @@ npm install
 echo "Done"
 echo
 
+# install pm2
+echo "Install pm2"
+sudo npm install -g pm2
+echo "Done"
+echo
+
 # start app
 echo "Start app..."
-npm start
+pm2 start app.js
+pm2 save
 

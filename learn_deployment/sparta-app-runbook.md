@@ -41,7 +41,6 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs`
 
 
 ## EC2 Instance for database
-
 - Ubuntu Server 22.04
 - t3.micro
 - Security group:
@@ -49,7 +48,6 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs`
   - allow port 27017 from anywhere
 
 ## Script for database
-
 see provisiondb.sh
 
 - updates
@@ -91,7 +89,6 @@ start and enable database
 
 
 ## Connect app and database
-
 - in app script/terminal, before npm start:
   - set environment variable
     - `export DB_HOST=mongodb://<database private IP>:27017/posts`
@@ -100,7 +97,6 @@ start and enable database
 
 
 ## Make script run without input
-
 - add variable to make certain commands non-interactive
   - `DEBIAN_FRONTEND=noninteractive`
 - use `sed` to change the bindIP:
@@ -112,6 +108,7 @@ start and enable database
 gpg --dearmor | \
 sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
   - `tee` overwrites the file without asking. Redirecting `> /dev/null` suppresses output
+- OR just add `--yes` to the original command
 
 - to run scripts:
   - put into git repo & pull, or create new script file and paste
@@ -120,7 +117,6 @@ sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
 
 
 ## Run in background
-
 - `nohup npm start &`
 
 ### To stop
@@ -132,13 +128,27 @@ sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
 
 ### Or using pm2
 - install
-  - `npm install -g pm2`
-- start script
-  - `pm2 start <script>.sh --interpreter bash`
+  - `sudo npm install -g pm2`
+- start script from terminal
+  - `pm2 start <script name>.sh --interpreter bash`
   - add a name to make it easier to find: `pm2 start <script>.sh --name <name> --interpreter bash`
+- or from within script, change `nohup npm start &` to
+  - `pm2 start app.js`
 - view running processes
   - `pm2 list`
-
-
+- stop
+  - `pm2 stop all`
+  - if only `pm2 stop <name>` the node child process will continue 
+  - `pm2 delete all` 
 
  
+ ## Configure Nginx
+- **reverse proxy:** in order for the public IP to lead to the app instead of typing in port 3000, configure nginx to automatically reroute to port 3000
+- the file that needs to be altered is `/etc/nginx/sites-available/default`
+- replace the line `try_files $uri $uri/ =404;` with `proxy_pass http://localhost:3000;`, again with `sed`
+  - `sudo sed -i 's|try_files \$uri \$uri/ =404;|proxy_pass http://localhost:3000;|' /etc/nginx/sites-available/default`
+ - then reload nginx: `sudo systemctl reload nginx`
+
+
+## Run script from User Data
+

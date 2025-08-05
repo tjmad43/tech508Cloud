@@ -12,19 +12,12 @@ echo
 
 # import public key
 echo "Import public key..."
-sudo apt-get install gnupg curl
+sudo DEBIAN_FRONTEND=noninteractive apt-get install gnupg curl
 
-
-# change -o to -tee
-#curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-#   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
-#   --dearmor
-#echo "Done"
-#echo
 echo "Import public key..."
 curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-gpg --dearmor | \
-sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null
+   gpg --dearmor | \
+   sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null
 echo "Done"
 echo
 
@@ -42,7 +35,6 @@ echo "Done"
 echo
 
 # install mongo db
-# fix! needs input
 echo "Install mongodb..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
    mongodb-org=7.0.22 \
@@ -59,7 +51,7 @@ echo
 
 # change bindIp to allow anywhere
 echo "Change bindIp..."
-sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
+sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
 echo "Done"
 echo
 
