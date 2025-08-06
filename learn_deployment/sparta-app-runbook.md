@@ -97,7 +97,7 @@ start and enable database
 
 
 ## Make script run without input
-- add variable to make certain commands non-interactive
+- add variable to make `sudo apt` commands non-interactive
   - `DEBIAN_FRONTEND=noninteractive`
 - use `sed` to change the bindIP:
   - `sed -i 's/old_text/new_text/' filename`
@@ -108,7 +108,7 @@ start and enable database
 gpg --dearmor | \
 sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
   - `tee` overwrites the file without asking. Redirecting `> /dev/null` suppresses output
-- OR just add `--yes` to the original command
+- **OR** just add `--yes` to the original command
 
 - to run scripts:
   - put into git repo & pull, or create new script file and paste
@@ -143,6 +143,7 @@ sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
 
  
  ## Configure Nginx
+- currently the app is accessed by going to http://[public IP]:3000
 - **reverse proxy:** in order for the public IP to lead to the app instead of typing in port 3000, configure nginx to automatically reroute to port 3000
 - the file that needs to be altered is `/etc/nginx/sites-available/default`
 - replace the line `try_files $uri $uri/ =404;` with `proxy_pass http://localhost:3000;`, again with `sed`
@@ -151,4 +152,11 @@ sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
 
 
 ## Run script from User Data
-
+- instead of creating or moving script file to vm, insert into "user data" box when creating vm
+- notes:
+  - script will only run once, after vm is created
+  - files created will be saved under root user not ubuntu user, make sure file paths go to correct place
+    - keeping `git clone ... repo` `cd repo/app` will still work (just from root user's files)
+  - must start with the she-bang line still
+  - make sure to use script with _no user input_
+  - app may not show up straight away - script takes some time to run through

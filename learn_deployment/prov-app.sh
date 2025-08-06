@@ -47,7 +47,10 @@ echo
 cd repo/app
 
 # database instance private IP
-export DB_HOST=mongodb://172.31.30.252:27017/posts
+echo "Set db IP..."
+export DB_HOST=mongodb://172.31.26.66:27017/posts
+echo "Done"
+echo
 
 # seed database
 echo "Seed database..."
