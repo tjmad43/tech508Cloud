@@ -73,5 +73,4 @@ echo
 # start app
 echo "Start app..."
 pm2 start app.js
-pm2 save
 

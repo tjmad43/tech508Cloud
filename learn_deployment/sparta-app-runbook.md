@@ -1,5 +1,22 @@
 # Sparta App
 
+- [Sparta App](#sparta-app)
+  - [Git initialisation](#git-initialisation)
+  - [EC2 Instance](#ec2-instance)
+  - [Script for app](#script-for-app)
+  - [EC2 Instance for database](#ec2-instance-for-database)
+  - [Script for database](#script-for-database)
+  - [Connect app and database](#connect-app-and-database)
+  - [Make script run without input](#make-script-run-without-input)
+  - [Run in background](#run-in-background)
+    - [To stop](#to-stop)
+    - [Or using pm2](#or-using-pm2)
+  - [Configure Nginx](#configure-nginx)
+  - [Run script from User Data](#run-script-from-user-data)
+  - [Levels of automation for app deployment using VMs](#levels-of-automation-for-app-deployment-using-vms)
+  - [Creating VMs from AMIs](#creating-vms-from-amis)
+
+
 ## Git initialisation
 - in correct folder
 - `git init`
@@ -155,8 +172,54 @@ sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg > /dev/null`
 - instead of creating or moving script file to vm, insert into "user data" box when creating vm
 - notes:
   - script will only run once, after vm is created
-  - files created will be saved under root user not ubuntu user, make sure file paths go to correct place
-    - keeping `git clone ... repo` `cd repo/app` will still work (just from root user's files)
+  - files created will be saved under root directory not ubuntu user, make sure file paths go to correct place
+    - keeping relative path `git clone ... repo` `cd repo/app` will still work (just from root directory)
   - must start with the she-bang line still
   - make sure to use script with _no user input_
   - app may not show up straight away - script takes some time to run through
+- when starting up:
+  - check database script worked before creating vm for app
+    - ssh in
+    - `sudo systemctl status mongod` for database status
+    - `cat /etc/mongod.conf | grep bindIp` to check the bindIp was changed correctly
+  - app script will take a while to run - while that's happening, ssh in and use `htop` to monitor it
+    - `sudo nano /var/log/cloud-init-output.log` to create a log file for troubleshooting 
+
+
+## Levels of automation for app deployment using VMs
+![levels-of-automation](automation-levels.png)
+
+An AMI (Amazon Machine Image) is a preconfigured virtual machine image to launch new instances from. They include:
+- OS
+- software installed
+- any other data
+
+of the VM the image was taken from.
+
+The app script has already been run through user data in the original VM and will not be run again -> everything has been installed and configured but the app itself will not be told to start up. 
+
+A small script should be given in user data of the new VM being made from the image including:
+- #!/bin/bash
+- cd into app folder
+- set environment variable for database private IP
+- pm2 start app.js
+
+
+## Creating VMs from AMIs
+- create database and app VMs with previous scripts in user data, make sure the app works exactly as it should
+- on each VM:
+  - Actions -> Create image
+  - naming convention: tech508-tabitha-test-sparta-app-ready-to-run-database/app
+  - add new tag
+    - "Name" - above name
+  - Create image
+- when status is Available, Launch instance from AMI
+- database as usual
+- app needs short script in user data:
+  - see run-app-only.sh
+  - `#!/bin/bash` to define bash script
+  - `export DB_HOST=mongodb://<privIP>:27017/posts` set env var for database IP
+    - make sure to change to the new db instance IP
+  - `cd repo/app` navigate to app folder
+  - `pm2 stop all` stop any previous processes
+  - `pm2 start app.js` start the app
