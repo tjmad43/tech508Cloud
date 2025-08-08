@@ -1,10 +1,18 @@
 # Auto Scaling Groups
 
 ## Why use an AWS Auto Scaling Group?
+**High Availability & Reliability**
+- ASG ensures your application is always running by automatically replacing unhealthy instances and maintaining a specified number of instances (minimum capacity)
+- If an instance fails (e.g., crashes or becomes unresponsive), it gets replaced automatically
 
+**Automatic Scaling Based on Demand**
+- Scale Out: Adds more instances when demand increases (e.g., CPU or network usage spikes)
+- Scale In: Terminates unnecessary instances when demand drops — saving costs
+
+**Note:** AWS Auto Scaling groups are horizontal scaling - adding more VMs as needed rather than increasing the size of a single VM
 
 ## Diagram
-
+![asg](asg.png)
 
 ## Create Launch Template
 
