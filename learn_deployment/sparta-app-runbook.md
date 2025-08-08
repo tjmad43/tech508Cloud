@@ -208,12 +208,12 @@ A small script should be given in user data of the new VM being made from the im
 ## Creating VMs from AMIs
 - create database and app VMs with previous scripts in user data, make sure the app works exactly as it should
 - on each VM:
-  - Actions -> Create image
+  - _Actions_ -> _Create image_
   - naming convention: tech508-tabitha-test-sparta-app-ready-to-run-database/app
-  - add new tag
-    - "Name" - above name
-  - Create image
-- when status is Available, Launch instance from AMI
+  - _Add new tag_
+    - "Name" - name as above
+  - _Create image_
+- when status is _Available_, _Launch instance from AMI_
 - database as usual
 - app needs short script in user data:
   - see run-app-only.sh
