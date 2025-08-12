@@ -13,14 +13,16 @@ The problem so far: database not secure
   - have to SSH in through app VM
   - everything _has_ to be installed already as no access to internet
 
-**Note:** CIDR blocks
+**Note:** Public IP is associated with app VM specifically, not VPC as a whole
+
+**Note:** CIDR blocks:
 
 `10.0.0.0/16`
 
 - first 4 numbers: each have 8 bits, range 0-255
 - `/16` means the first 16 bits are locked
   - e.g. `10.0` 
-  - so the last `0.0` can be used/changed to give possible IP addresses
+  - so the last `0.0` can be used/changed to give possible available IP addresses
 
 ## Create custom VPC
  - _VPCs_
