@@ -4,6 +4,7 @@
   - [Task](#task)
   - [Step 1: Do it manually](#step-1-do-it-manually)
     - [Download and save image to bucket](#download-and-save-image-to-bucket)
+    - [Make image public](#make-image-public)
     - [Change app image](#change-app-image)
   - [Step 2: Automate](#step-2-automate)
     - [Reverse Script](#reverse-script)
@@ -46,6 +47,8 @@ documentation on how and WHY you completed the task - it should be ready to shar
   - `curl https://i.pinimg.com/736x/b4/d7/55/b4d755b92eb04d33fde73341b8c557cb.jpg --output cat.jpg`
 - make bucket to go in: `aws s3 mb s3://tech508-tabitha-cat-bucket`
 - copy image to bucket: `aws s3 cp cat.jpg s3://tech508-tabitha-cat-bucket`
+
+### Make image public
 - update ACL (access control list) of the file to make public: `aws s3api put-object-acl --bucket DOC-EXAMPLE-BUCKET --key exampleobject --acl public-read`
     - `aws s3api put-object-acl --bucket tech508-tabitha-cat-bucket --key cat.jpg --acl public-read`
     - Access Denied: public access control lists (ACLs) are blocked by the BlockPublicAcls block public access setting
@@ -147,7 +150,7 @@ echo
 
 ```
 
-
-
-- edit object ownership
-- enable acl
+- disable block public acces
+- ownership-controls 'Rules=[ObjectOwnership=]
+- add read only bucket policy
+- making things public is difficult on purpose
