@@ -11,6 +11,14 @@
 
 **Note:** AWS Auto Scaling groups are horizontal scaling - adding more VMs as needed rather than increasing the size of a single VM
 
+
+### Scalability vs Elasticity
+**Scalability:** ability to accommadate a larger load my making the hardware stronger (scale up), or by adding nodes (scale out)
+
+**Elasticity:** once a system is scalable, elasticity means that there will be some "auto-scaling" so that the system can scale based on the load. This is "cloud-friendly": pay-per-use, match demand, optimise costs
+
+**Agility:** new IT resources are only a click away, which means that you reduce the time to make those resources avvailable to your developers from weeks to just minutes
+
 ## Diagram
 ![asg](asg.png)
 
