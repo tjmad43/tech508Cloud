@@ -9,3 +9,4 @@ Sparta Cloud training - AWS focus
   - including AWS Certified Cloud Practitioner notes
 - Terraform
 - CICD (with Jenkins)
+- Docker
